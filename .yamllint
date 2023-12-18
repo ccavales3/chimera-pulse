@@ -1,0 +1,10 @@
+---
+extends: default
+
+ignore: |
+  build/
+rules:
+  line-length:
+    max: 160
+  truthy:
+    allowed-values: ['true', 'false', 'on']

@@ -1,0 +1,2 @@
+[bandit]
+exlude: ./tests,./build

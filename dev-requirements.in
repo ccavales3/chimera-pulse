@@ -1,0 +1,17 @@
+# dev-requirements.in
+-c requirements.txt     # constrain the dev requirements to packages in requirements.txt
+bandit==1.7.0           # https://github.com/PyCQA/bandit
+black==21.6b0           # https://github.com/psf/black
+coverage-badge==1.0.1   # https://github.com/dbrgn/coverage-badge
+# dependency-check==0.5.0 # https://github.com/jhermann/dependency-check-py
+detect-secrets==1.1.0   # https://github.com/Yelp/detect-secrets
+flake8==3.9.2           # https://gitlab.com/pycqa/flake8
+mypy==0.902             # https://github.com/python/mypy
+pre-commit==2.13.0      # https://github.com/pre-commit/pre-commit
+pylint==2.8.3           # https://github.com/PyCQA/pylint
+pytest==6.2.4           # https://docs.pytest.org/en/latest/
+pytest-cov==2.12.1      # https://github.com/pytest-dev/pytest-cov
+safety==1.10.3          # https://github.com/pyupio/safety
+
+## Sub dependencies installed
+

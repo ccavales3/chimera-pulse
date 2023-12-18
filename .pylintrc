@@ -1,0 +1,8 @@
+[DESIGN]
+max-args=6
+
+[FORMAT]
+max-line-length=120
+
+[MESSAGES CONTROL]
+disable=W0603,R0801
