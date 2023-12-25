@@ -1,6 +1,25 @@
-# Contribute to ChimeraPulse
+## Local Development
 
-ChimeraPulse is written with the thought of multi language support. Refer to CONTIBUTE.md page of the specific languge.
+When contributing to this repo. Please follow [pep 8](https://peps.python.org/pep-0008/) naming convention standard. 
 
-[js](./js/CONTRIBUTE.md)  
-[python](./py/CONTRIBUTE.md)
+Implement following [click](https://click.palletsprojects.com/en/8.1.x/) framework standards
+
+### Prerequisites
+
+Switch to your python virtual environment which contains all of the installed required libraries for this project. If you haven't setup your environment yet, I recommend installing miniconda and creating a new virtual env.
+
+```sh
+brew install --cask miniconda
+```
+
+Utilize [pip-tools](https://github.com/jazzband/pip-tools) to generate development and production dependencies.
+
+```sh
+pip install pip-tools
+```
+
+Compiles and install the dependencies complied by the previous command.
+
+```sh
+make install-dev
+```
