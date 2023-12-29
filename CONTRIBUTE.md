@@ -23,7 +23,6 @@ Intall [setuptools](https://github.com/pypa/setuptools) to hanlde facilitation o
 pip install setuptools
 ```
 
-
 Compiles and install the dependencies complied by the previous command.
 
 ```sh
