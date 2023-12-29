@@ -14,11 +14,17 @@ Example:
 """    
 import click
 
-# from chimerapulse.chimerapulse import chimerapulse
 from chimerapulse import chimerapulse
+from chimerapulse.core.language import language
+from chimerapulse.core.speech import speech
+from chimerapulse.core.translator import translator
 
 @click.group()
 def commands():
     pass
 
+# TODO: Change "main" to more appropriate name
 commands.add_command(chimerapulse.main)
+commands.add_command(language.language)
+commands.add_command(speech.speech)
+commands.add_command(translator.translator)

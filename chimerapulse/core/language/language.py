@@ -1,7 +1,12 @@
 """Entry point for chimerapulse.core.language module
 
+Reference:
+    Service limits for Azure AI Language
+        https://learn.microsoft.com/en-us/azure/ai-services/language-service/concepts/data-limits
+
 Example:
     python -m chimerapulse.core.language <submodule> <args>
+    chi language <submodule> <args>
 """
 import click
 

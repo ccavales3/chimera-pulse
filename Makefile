@@ -5,6 +5,10 @@ NC=\033[0m # No Color
 clean-all: clean-deps clean-build clean-pyc
 	@echo 'Running clean to reset project'
 
+clean-packages:
+	@echo 'Remove installed packages'
+	@pip freeze --exclude-editable | xargs pip uninstall -y
+
 clean-pyc:
 	@echo 'Remove python artifacts'
 	@rm -rf  __pycache__ .mypy_cache .pytest_cache htmlcov
@@ -15,7 +19,8 @@ clean-build:
 	@rm -rf dist/
 	@rm -rf *.egg-info
 
-clean-deps:
+# clean-deps: clean-packages
+clean-deps: 
 	@rm -f requirements.txt dev-requirements.txt
 
 # compile prod and dev dependencies

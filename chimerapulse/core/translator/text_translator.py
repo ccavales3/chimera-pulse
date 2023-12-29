@@ -7,7 +7,7 @@ Reference:
     List of supported output languages - https://api.cognitive.microsofttranslator.com/languages?api-version=3.0&scope=translation
 
 Example:
-    python -m chimerapulse.core.language translatetext <args>
+    chi translator translatetext -s en-US -t fil -c 'Hello, goodmorning'
 """
 import os
 
@@ -24,6 +24,11 @@ load_dotenv()
 
 
 def __authenticate_client():
+    """Authenticate service
+
+    Returns:
+        (TextTranslationClient): Authenticated client
+    """
     # Get Configuration Settings
     translatorendpoint = os.getenv('TRANSLATOR_SERVICE_ENDPOINT')
     translatorkey = os.getenv('TRANSLATOR_SERVICE_KEY')
@@ -35,6 +40,7 @@ def __authenticate_client():
     return TextTranslationClient(endpoint=translatorendpoint, credential=credential)
 
 
+# TODO: Modify -c to accept path to document
 @click.command()
 @click.option('-s', '--source-language', required=True, help='Source language')
 @click.option('-t', '--target-language', required=True, help='Target language')
@@ -42,11 +48,17 @@ def __authenticate_client():
 def translatetext(source_language, target_language, content):
     """Main command function called when calling text translator as a package
     """
-    print('here in text_translation')
     translator_translatetext(source_language, target_language, content)
 
 
 def translator_translatetext(source_language, target_language, content):
+    """Translate contect from source to target language
+
+    Args:
+        source_language (str): Source language
+        target_language (str): Language to translate to
+        content (str): Text to be translated
+    """
     print(f"Translating from {source_language}")
     text_translator = __authenticate_client()
 

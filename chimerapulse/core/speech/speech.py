@@ -2,6 +2,7 @@
 
 Example:
     python -m chimerapulse.core.speech <submodule> <args>
+    chi speech <submodule> <args>
 """
 import click
 

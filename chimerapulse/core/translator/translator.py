@@ -2,6 +2,7 @@
 
 Example:
     python -m chimerapulse.core.translator text_translation <args>
+    chi translator <submodule> <args>
 """
 import click
 

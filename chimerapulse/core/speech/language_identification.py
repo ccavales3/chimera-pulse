@@ -9,6 +9,7 @@ List of supported language for language identification:
 
 Example:
     python -m chimerapulse.core.speech identifylanguage <args>
+    chi speech identifylanguage -p
 """
 import os
 from tkinter import filedialog
@@ -23,40 +24,9 @@ import azure.cognitiveservices.speech as speechsdk
 load_dotenv()
 
 
-def get_audio_file_path(ctx, param, value):
-    filepath = ''
-    print('Collecting audio...')
-
-    # Do nothing if option is not specified
-    if value == None:
-        return None
-        # filepath = value
-
-    # Open file dialog if path is empty
-    if value == 'flag':
-        filepath = filedialog.askopenfilename()
-    else:
-        filepath = os.path.relpath(value, os.getcwd())
-
-
-    # TODO: Verify file is an audio file here
-    # Validate file path if value is provided
-    if not os.path.isfile(filepath):
-        raise ValueError(f"ERROR: Cannot find audio file at: {filepath}. Exiting...")
-
-    print(f'Audio file path: {filepath}')
-    return filepath
-
-
-def __authenticate_client():
-    # Get Configuration Settings
-    speechkey = os.getenv('SPEECH_SERVICE_KEY')
-    speechregion = os.getenv('SPEECH_SERVICE_REGION')
-
-    # Connect to Azure Language Service
-    return speechsdk.SpeechConfig(speechkey, speechregion)
-
-
+"""
+Private fxns
+"""
 def __identify_language(audio_config, languages):
     """Retrieves and processes language of audio
 
@@ -89,6 +59,58 @@ def __identify_language(audio_config, languages):
     print(f"Detected language: {detected_language}\n")
 
     return [detected_language, result]
+
+
+def __authenticate_client():
+    """Authenticates speech client
+
+    Return:
+        (SpeechConfig): Speech client
+    """
+    # Get Configuration Settings
+    speechkey = os.getenv('SPEECH_SERVICE_KEY')
+    speechregion = os.getenv('SPEECH_SERVICE_REGION')
+
+    # Connect to Azure Language Service
+    return speechsdk.SpeechConfig(speechkey, speechregion)
+
+
+"""
+Validation fxns
+"""
+def get_audio_file_path(ctx, param, value):
+    """Retrieves audoi file path
+
+    Args:
+        ctx (obj): Context
+        param (str): Parameter
+        value (Any): Value
+
+    Return:
+        (str): File path
+    """
+    filepath = ''
+    print('Collecting audio...')
+
+    # Do nothing if option is not specified
+    if value == None:
+        return None
+        # filepath = value
+
+    # Open file dialog if path is empty
+    if value == 'flag':
+        filepath = filedialog.askopenfilename()
+    else:
+        filepath = os.path.relpath(value, os.getcwd())
+
+
+    # TODO: Verify file is an audio file here
+    # Validate file path if value is provided
+    if not os.path.isfile(filepath):
+        raise ValueError(f'ERROR: Cannot find audio file at: {filepath}. Exiting...')
+
+    print(f'Audio file path: {filepath}')
+    return filepath
 
 
 @click.command()

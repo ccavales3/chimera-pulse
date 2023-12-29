@@ -18,6 +18,12 @@ Utilize [pip-tools](https://github.com/jazzband/pip-tools) to generate developme
 pip install pip-tools
 ```
 
+Intall [setuptools](https://github.com/pypa/setuptools) to hanlde facilitation of python packages
+```sh
+pip install setuptools
+```
+
+
 Compiles and install the dependencies complied by the previous command.
 
 ```sh
