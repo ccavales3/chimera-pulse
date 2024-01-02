@@ -134,4 +134,4 @@ dmypy.json
 .pyre/
 
 # Project docs
-chimera_pulse_logs
+chimera_pulse_logs.txt
