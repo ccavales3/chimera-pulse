@@ -85,6 +85,8 @@ def language_namedentites(text):
     # Currently a bug in Azure API. Using a set to work around duplicate value issue
     entity_set = set()
 
+    # Duplicate text with different categories will be skipped with this solution.
+    # The first category will be the one that is printed.
     print("Named Entities:")
     for entity in namedentities_result.entities:
         # Check if current entity already exists in the set
