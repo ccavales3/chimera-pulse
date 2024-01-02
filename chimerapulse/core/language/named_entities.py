@@ -18,7 +18,13 @@ from azure.core.credentials import AzureKeyCredential
 # Load env vars
 load_dotenv()
 
+# Declare global variables
+entities = []
+verbose = False
 
+"""
+Private fxns
+"""
 def __authenticate_client():
     """Authenticate service
 
@@ -34,6 +40,13 @@ def __authenticate_client():
             endpoint=languageendpoint, 
             credential=credential)
     return text_analytics_client
+
+
+def __vprint(text):
+    global verbose
+
+    if (verbose):
+        print(text)
 
 
 """
@@ -73,12 +86,20 @@ def get_document_file_path(document, document_file_path):
 @click.command()
 @click.option('-d', '--document', help='Text to analyze')
 @click.option('-p', '--document-file-path', flag_value='flag', is_flag=False, default=None, help='Path to document file')
-def namedentites(document, document_file_path):
+@click.option('-v', '--verbose-print', is_flag=True, flag_value=True, default=False, help='Prints response instead of returning as JSON object')
+def namedentites(document, document_file_path, verbose_print):
+    global verbose
+    
+    verbose = verbose_print    
+    
     document_contents = get_document_file_path(document, document_file_path)
     language_namedentites(document_contents)
 
 
 def language_namedentites(text):
+    global verbose
+    global entities
+    
     client = __authenticate_client()
     namedentities_result = client.recognize_entities(documents=[text])[0]
     
@@ -87,12 +108,20 @@ def language_namedentites(text):
 
     # Duplicate text with different categories will be skipped with this solution.
     # The first category will be the one that is printed.
-    print("Named Entities:")
+    __vprint("Named Entities:")
     for entity in namedentities_result.entities:
         # Check if current entity already exists in the set
         if not(entity.text in entity_set):
-            print("Text:", entity.text)
-            print("Category:", entity.category)
-            print("SubCategory:", entity.subcategory)
-            print('\n')
+            __vprint(f'"Text:" {entity.text}')
+            __vprint(f'"Category:" {entity.category}')
+            __vprint(f'"Subcategory:" {entity.subcategory}')
+            __vprint('\n')
+            entities.append({
+                "text": entity.text,
+                "category": entity.category,
+                "subcategory": entity.subcategory
+            })
         entity_set.add(entity.text)
+        
+    if not verbose:
+        return entities
