@@ -24,7 +24,11 @@ def commands():
     pass
 
 # TODO: Change "main" to more appropriate name
+# ChimeraPulse main commands
 commands.add_command(chimerapulse.main)
+commands.add_command(chimerapulse.case1)
+
+# ChimeraPulse core capabilities
 commands.add_command(language.language)
 commands.add_command(speech.speech)
 commands.add_command(translator.translator)
