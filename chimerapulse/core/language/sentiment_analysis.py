@@ -17,7 +17,8 @@ from azure.core.credentials import AzureKeyCredential
 
 # Load env vars
 load_dotenv()
-    
+
+
 def __authenticate_client():
     """Authenticate service
 
@@ -33,6 +34,7 @@ def __authenticate_client():
             endpoint=languageendpoint, 
             credential=credential)
     return text_analytics_client
+
 
 """
 Validation fxns
@@ -67,12 +69,14 @@ def get_document_file_path(document, document_file_path):
 
     return file_contents.read()
 
+
 @click.command()
 @click.option('-d', '--document', help='Text to analyze')
 @click.option('-p', '--document-file-path', flag_value='flag', is_flag=False, default=None, help='Path to document file')
 def analyzesentiment(document, document_file_path):
     document_contents = get_document_file_path(document, document_file_path)
     language_analyzesentiment(document_contents)
+
 
 def language_analyzesentiment(text):
     client = __authenticate_client()
