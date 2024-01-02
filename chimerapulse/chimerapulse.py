@@ -10,6 +10,7 @@ import click
 from chimerapulse.core.speech import language_identification
 from chimerapulse.core.translator import text_translator
 from chimerapulse.core.language import sentiment_analysis
+from chimerapulse.core.language import key_phrases
 
 
 @click.command()
@@ -23,6 +24,9 @@ def main(audio_file_path: str):
     
     # Analyze Sentiment
     sentiment_analysis.language_analyzesentiment(result.text)
+    
+    # Extract Key Phrases
+    key_phrases.language_keyphrases(result.text)
 
     print('--fin--')
 
