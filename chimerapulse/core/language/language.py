@@ -12,6 +12,7 @@ import click
 
 from chimerapulse.core.language import document_summarization
 from chimerapulse.core.language import conversation_summarization
+from chimerapulse.core.language import sentiment_analysis
 
 
 @click.group()
@@ -22,3 +23,4 @@ def language():
 
 language.add_command(document_summarization.summarizedocument)
 language.add_command(conversation_summarization.summarizeconversation)
+language.add_command(sentiment_analysis.analyzesentiment)

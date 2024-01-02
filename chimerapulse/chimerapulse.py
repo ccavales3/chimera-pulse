@@ -9,6 +9,7 @@ import click
 # Import ChimeraPulse modules
 from chimerapulse.core.speech import language_identification
 from chimerapulse.core.translator import text_translator
+from chimerapulse.core.language import sentiment_analysis
 
 
 @click.command()
@@ -19,6 +20,9 @@ def main(audio_file_path: str):
 
     # Translate text
     text_translator.translator_translatetext(source_language, 'fil', result.text)
+    
+    # Analyze Sentiment
+    sentiment_analysis.language_analyzesentiment(result.text)
 
     print('--fin--')
 
