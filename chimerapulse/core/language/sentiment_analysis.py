@@ -2,7 +2,7 @@
 https://learn.microsoft.com/en-us/azure/ai-services/language-service/sentiment-opinion-mining/overview?tabs=prebuilt
 
 Example:
-    python -m chimerapulse.core.language analyzesentiment <args>
+    python -m chimerapulse.core.language analyzesentiment -t 'The food was great'
 """
 
 import os
@@ -16,8 +16,8 @@ from azure.core.credentials import AzureKeyCredential
 # Load env vars
 load_dotenv()
 
-# TODO: Add click parameters
 @click.command()
+@click.option('-t', 'text', required=True, help='Text to analyze')
 def analyzesentiment(text):
     language_analyzesentiment(text)
     
