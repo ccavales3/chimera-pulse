@@ -11,6 +11,7 @@ from chimerapulse.core.speech import language_identification
 from chimerapulse.core.translator import text_translator
 from chimerapulse.core.language import sentiment_analysis
 from chimerapulse.core.language import key_phrases
+from chimerapulse.core.language import named_entities
 
 
 @click.command()
@@ -27,6 +28,9 @@ def main(audio_file_path: str):
     
     # Extract Key Phrases
     key_phrases.language_keyphrases(result.text)
+    
+    # Named Entity Recognition
+    named_entities.language_namedentites(result.text)
 
     print('--fin--')
 
