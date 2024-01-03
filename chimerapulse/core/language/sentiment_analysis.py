@@ -18,7 +18,14 @@ from azure.core.credentials import AzureKeyCredential
 # Load env vars
 load_dotenv()
 
+# Declare global variables
+overall_sentiment = ''
+analysis = []
+verbose = False
 
+"""
+Private fxns
+"""
 def __authenticate_client():
     """Authenticate service
 
@@ -34,6 +41,13 @@ def __authenticate_client():
             endpoint=languageendpoint, 
             credential=credential)
     return text_analytics_client
+
+
+def __vprint(text):
+    global verbose
+
+    if (verbose):
+        print(text)
 
 
 """
@@ -73,21 +87,41 @@ def get_document_file_path(document, document_file_path):
 @click.command()
 @click.option('-d', '--document', help='Text to analyze')
 @click.option('-p', '--document-file-path', flag_value='flag', is_flag=False, default=None, help='Path to document file')
-def analyzesentiment(document, document_file_path):
+@click.option('-v', '--verbose-print', is_flag=True, flag_value=True, default=False, help='Prints response instead of returning as JSON object')
+def analyzesentiment(document, document_file_path, verbose_print):
+    global verbose
+    
+    verbose = verbose_print
+    
     document_contents = get_document_file_path(document, document_file_path)
     language_analyzesentiment(document_contents)
 
 
 def language_analyzesentiment(text):
+    global verbose
+    global analysis
+    global overall_sentiment
+    
     client = __authenticate_client()
     sentiment_result = client.analyze_sentiment(documents=[text])
     doc_result = [doc for doc in sentiment_result if not doc.is_error]
     
     for document in doc_result:
-        print("Overall Sentiment: {}".format(document.sentiment))
+        __vprint("Overall Sentiment: {}".format(document.sentiment))
+        overall_sentiment = 'Overall Sentiment: ' + document.sentiment
 
         for sentence in document.sentences:
-            print("Sentence: {}".format(sentence.text))
-            print("Sentence sentiment: {}".format(sentence.sentiment))
+            __vprint("Sentence: {}".format(sentence.text))
+            __vprint("Sentence sentiment: {}".format(sentence.sentiment))
+            
+            analysis.append({
+                "sentence": [{
+                    "text": sentence.text,
+                    "sentiment": sentence.sentiment
+                }]
+            })
         
-        print('\n')
+        __vprint('\n')
+    
+    if not verbose:
+        return overall_sentiment, analysis

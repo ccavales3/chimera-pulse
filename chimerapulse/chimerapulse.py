@@ -29,13 +29,15 @@ def case1(file_path: str):
     text_translator.translator_translatetext(source_language, 'fil', result.text)
     
     # Analyze Sentiment
-    sentiment_analysis.language_analyzesentiment(result.text)
+    print(sentiment_analysis.language_analyzesentiment(result.text))
     
     # Extract Key Phrases
-    key_phrases.language_keyphrases(result.text)
+    print(key_phrases.language_keyphrases(result.text))
     
     # Named Entity Recognition
-    named_entities.language_namedentites(result.text)
+    print(named_entities.language_namedentites(result.text))
+    
+    print('\n')
 
     print('--fin--')
 
