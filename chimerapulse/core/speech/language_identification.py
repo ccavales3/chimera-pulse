@@ -1,5 +1,4 @@
-"""Module that contains raw calls to Azure speech service
-https://learn.microsoft.com/en-us/azure/ai-services/speech-service/
+"""Module that contains 'language identification' logic call to Azure speech service
 
 Reference:
     https://learn.microsoft.com/en-us/azure/ai-services/speech-service/language-identification?tabs=once&pivots=programming-language-python
@@ -95,7 +94,6 @@ def get_audio_file_path(ctx, param, value):
     # Do nothing if option is not specified
     if value == None:
         return None
-        # filepath = value
 
     # Open file dialog if path is empty
     if value == 'flag':

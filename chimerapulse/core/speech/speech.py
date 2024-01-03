@@ -6,6 +6,7 @@ Example:
 """
 import click
 
+from chimerapulse.core.speech import diarization
 from chimerapulse.core.speech import language_identification
 
 
@@ -16,4 +17,5 @@ def speech():
     pass  # pylint: disable=unnecessary-pass
 
 
+speech.add_command(diarization.diarization)
 speech.add_command(language_identification.identifylanguage)
