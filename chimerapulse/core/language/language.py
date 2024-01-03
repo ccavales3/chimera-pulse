@@ -15,6 +15,7 @@ from chimerapulse.core.language import conversation_summarization
 from chimerapulse.core.language import sentiment_analysis
 from chimerapulse.core.language import key_phrases
 from chimerapulse.core.language import named_entities
+from chimerapulse.core.language import entity_linking
 
 
 @click.group()
@@ -28,3 +29,4 @@ language.add_command(conversation_summarization.summarizeconversation)
 language.add_command(sentiment_analysis.analyzesentiment)
 language.add_command(key_phrases.keyphrases)
 language.add_command(named_entities.namedentites)
+language.add_command(entity_linking.entitylinking)

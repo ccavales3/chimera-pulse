@@ -12,6 +12,7 @@ from chimerapulse.core.language import document_summarization
 from chimerapulse.core.language import key_phrases
 from chimerapulse.core.language import named_entities
 from chimerapulse.core.language import sentiment_analysis
+from chimerapulse.core.language import entity_linking
 from chimerapulse.core.speech import diarization
 from chimerapulse.core.speech import language_identification
 from chimerapulse.core.translator import text_translator
@@ -36,6 +37,9 @@ def translatespeech(file_path: str):
     
     # Named Entity Recognition
     print(named_entities.language_namedentites(result.text))
+    
+    # Entity Linking
+    print(entity_linking.language_entitylinking(result.text))
     
     print('\n')
 
