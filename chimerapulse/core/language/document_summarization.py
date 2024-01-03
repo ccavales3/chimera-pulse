@@ -13,8 +13,8 @@ from tkinter import filedialog
 import click
 from dotenv import load_dotenv
 
-from azure.ai.textanalytics import AbstractiveSummaryAction, ExtractiveSummaryAction, TextAnalyticsClient
 from azure.core.credentials import AzureKeyCredential
+from azure.ai.textanalytics import AbstractiveSummaryAction, ExtractiveSummaryAction, TextAnalyticsClient
 
 
 # Load env vars

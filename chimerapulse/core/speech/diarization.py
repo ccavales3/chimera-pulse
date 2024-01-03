@@ -7,6 +7,8 @@ Example:
     python -m chimerapulse.core.speech diarization <args>
     chi speech diarization -p
 """
+import ast
+import json
 import os
 from tkinter import filedialog
 import time
@@ -108,17 +110,24 @@ def conversation_transcriber_transcribed_cb(evt: speechsdk.SpeechRecognitionEven
     # Access global variables
     global conversations
 
+    role_map = {
+        'Guest-1': 'Agent',
+        'Guest-2': 'Customer'
+    }
+
     __vprint('TRANSCRIBED:')
     if evt.result.reason == speechsdk.ResultReason.RecognizedSpeech:
         __vprint('\tText={}'.format(evt.result.text))
         __vprint('\tSpeaker ID={}'.format(evt.result.speaker_id))
 
-        conversations.append({
+        conversation_item = {
             "text": evt.result.text,
-            "id": len(conversations) + 1,
-            "role": evt.result.speaker_id[:-2],
+            "id": str(len(conversations) + 1),
+            "role": role_map[evt.result.speaker_id],
             "participantId": evt.result.speaker_id
-        })
+        }
+
+        conversations.append(conversation_item)
 
     elif evt.result.reason == speechsdk.ResultReason.NoMatch:
         print('\tNOMATCH: Speech could not be TRANSCRIBED: {}'.format(evt.result.no_match_details))
@@ -186,4 +195,4 @@ def speech_diarization(filepath):
     conversation_transcriber.stop_transcribing_async()
 
     if not verbose:
-        return conversations
+        return json.dumps(conversations)
