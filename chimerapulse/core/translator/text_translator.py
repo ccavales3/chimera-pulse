@@ -19,8 +19,13 @@ from azure.ai.translation.text import TextTranslationClient, TranslatorCredentia
 from azure.ai.translation.text.models import InputTextItem
 from azure.core.exceptions import HttpResponseError
 
+# Import namespaces
+import azure.cognitiveservices.speech as speech_sdk
+
 # Load env vars
 load_dotenv()
+
+global speech_config
 
 
 def __authenticate_client():
@@ -29,6 +34,8 @@ def __authenticate_client():
     Returns:
         (TextTranslationClient): Authenticated client
     """
+    global speech_config
+    
     # Get Configuration Settings
     translatorendpoint = os.getenv('TRANSLATOR_SERVICE_ENDPOINT')
     translatorkey = os.getenv('TRANSLATOR_SERVICE_KEY')
@@ -36,6 +43,7 @@ def __authenticate_client():
 
     # Connect to Azure Translator Service
     credential = TranslatorCredential(translatorkey, translatorregion)
+    speech_config = speech_sdk.SpeechConfig(translatorkey, translatorregion)
 
     return TextTranslationClient(endpoint=translatorendpoint, credential=credential)
 
@@ -72,8 +80,31 @@ def translator_translatetext(source_language, target_language, content):
         translatedobj = translation.translations[0]
         print(f"Content was translated to: '{translatedobj.to}'.")
         print(f"Result: {translatedobj.text}\n")
-        # _SynthesizeText(targetLanguage, translatedobj)
+        _SynthesizeText(target_language, translatedobj)
 
     except HttpResponseError as exception:
         print(f"Error Code: {exception.error.code}")
         print(f"Message: {exception.error.message}")
+
+
+def _SynthesizeText(targetLanguage, translatedObj):
+    global speech_config
+    
+    print("Synthesizing text...\n")
+    # Synthesize translation
+    voices = {
+            "en": "en-US-SaraNeural",
+            "es": "es-ES-ElviraNeural",
+            "fil": "fil-PH-BlessicaNeural",
+            # "fr": "fr-FR-HenriNeural",
+            "fr": "fr-FR-CoralieNeural",
+            "hi": "hi-IN-MadhurNeural",
+            "ko": "ko-KR-SunHiNeural",
+            "ms": "ms-MY-YasminNeural"
+
+    }
+    speech_config.speech_synthesis_voice_name = voices.get(targetLanguage)
+    speech_synthesizer = speech_sdk.SpeechSynthesizer(speech_config)
+    speak = speech_synthesizer.speak_text_async(translatedObj.text).get()
+    if speak.reason != speech_sdk.ResultReason.SynthesizingAudioCompleted:
+        print(speak.reason)

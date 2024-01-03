@@ -23,11 +23,22 @@ from chimerapulse.core.translator import text_translator
 @click.command()
 @click.option('-p', '--file-path', callback=language_identification.get_audio_file_path, flag_value='flag', is_flag=False, default=None, help='Path to audio file')
 def translatespeech(file_path: str):
+    targetLanguage = input("Enter a target language\n"
+        "en = English\n"
+        "es = Spanish\n"
+        "fil = Filipino\n"
+        "fr = French\n"
+        "hi = Hindi\n"
+        "ko = Korean\n"
+        "ms = Malaysia\n").lower()
+    
+    print('\n')
+      
     # Identify language from list and transcribe audio
     [source_language, result] = language_identification.speech_identifylanguage(file_path)
 
     # Translate text
-    text_translator.translator_translatetext(source_language, 'fil', result.text)
+    text_translator.translator_translatetext(source_language, targetLanguage, result.text)
     
     # Analyze Sentiment
     print(sentiment_analysis.language_analyzesentiment(result.text))
