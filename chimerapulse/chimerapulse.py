@@ -21,7 +21,7 @@ from chimerapulse.core.translator import text_translator
 
 @click.command()
 @click.option('-p', '--file-path', callback=language_identification.get_audio_file_path, flag_value='flag', is_flag=False, default=None, help='Path to audio file')
-def case1(file_path: str):
+def translatespeech(file_path: str):
     # Identify language from list and transcribe audio
     [source_language, result] = language_identification.speech_identifylanguage(file_path)
 
@@ -44,7 +44,7 @@ def case1(file_path: str):
 
 @click.command()
 @click.option('-p', '--file-path', callback=diarization.get_conversation_file_path, flag_value='flag', is_flag=False, default=None, help='Path to audio file')
-def case2(file_path):
+def convosummarization(file_path):
     """Diarize audio with mono channel and summarize conversation
 
     Args:
@@ -60,7 +60,7 @@ def case2(file_path):
 
 @click.command()
 @click.option('-p', '--file-path', flag_value='flag', is_flag=False, default=None, help='Path to audio file')
-def case3(file_path):
+def docsummarization(file_path):
     """TEMP entry point: Document summarization
 
     Args:
@@ -69,6 +69,7 @@ def case3(file_path):
     document_contents = document_summarization.get_document_file_path(None, file_path)
     document_summarization.language_summarizedocument(document_contents)
 
+    print('--fin--')
 
 # if __name__ == '__main__':
 #     main()
