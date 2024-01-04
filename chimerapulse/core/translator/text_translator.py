@@ -20,7 +20,7 @@ from azure.ai.translation.text.models import InputTextItem
 from azure.core.exceptions import HttpResponseError
 
 # Import helpers
-from chimerapulse.helpers import translator as translatorHelper
+from chimerapulse.core.speech import text_to_speech
 
 # Load env vars
 load_dotenv()
@@ -76,7 +76,7 @@ def translator_translatetext(source_language, target_language, content):
         translatedobj = translation.translations[0]
         print(f"Content was translated to: '{translatedobj.to}'.")
         print(f"Result: {translatedobj.text}\n")
-        translatorHelper.synthesizeText(target_language, translatedobj)
+        text_to_speech.synthesizeText(target_language, translatedobj)
 
     except HttpResponseError as exception:
         print(f"Error Code: {exception.error.code}")

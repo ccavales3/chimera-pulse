@@ -18,8 +18,8 @@ def __authenticate_client():
     global speech_config
     
     # Get Configuration Settings
-    translatorkey = os.getenv('TRANSLATOR_SERVICE_KEY')
-    translatorregion = os.getenv('TRANSLATOR_SERVICE_REGION')
+    translatorkey = os.getenv('SPEECH_SERVICE_KEY')
+    translatorregion = os.getenv('SPEECH_SERVICE_REGION')
 
     # Connect to Speech Config
     speech_config = speech_sdk.SpeechConfig(translatorkey, translatorregion)
