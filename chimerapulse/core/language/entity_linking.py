@@ -105,13 +105,13 @@ def language_entitylinking(text):
 
     __vprint("Linked Entities:")
     for entity in entitylinking_result.entities:
-        __vprint(f'"Name:" {entity.name}')
-        __vprint(f'"Id:" {entity.data_source_entity_id}')
-        __vprint(f'"Url:" {entity.url}')
-        __vprint(f'"Data Source:" {entity.data_source}')
+        __vprint(f'"NAME:" {entity.name}')
+        __vprint(f'"ID:" {entity.data_source_entity_id}')
+        __vprint(f'"URL:" {entity.url}')
+        __vprint(f'"DATA SOURCCE:" {entity.data_source}')
         __vprint("Matches:")
         for match in entity.matches:
-            __vprint(f'"Text:" {match.text}')
+            __vprint(f'"TEXT:" {match.text}')
             __vprint('\n')
         __vprint('\n')
         links.append({
