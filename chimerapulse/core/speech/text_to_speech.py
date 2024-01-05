@@ -25,7 +25,7 @@ def __authenticate_client():
     speech_config = speech_sdk.SpeechConfig(translatorkey, translatorregion)
 
 
-def synthesizeText(targetLanguage, translatedObj):
+def synthesizeText(targetLanguage, translatedObjText):
     global speech_config
     
     __authenticate_client()
@@ -46,6 +46,6 @@ def synthesizeText(targetLanguage, translatedObj):
     
     speech_config.speech_synthesis_voice_name = voices.get(targetLanguage)
     speech_synthesizer = speech_sdk.SpeechSynthesizer(speech_config)
-    speak = speech_synthesizer.speak_text_async(translatedObj.text).get()
+    speak = speech_synthesizer.speak_text_async(translatedObjText).get()
     if speak.reason != speech_sdk.ResultReason.SynthesizingAudioCompleted:
         print(speak.reason)

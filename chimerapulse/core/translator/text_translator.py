@@ -76,7 +76,7 @@ def translator_translatetext(source_language, target_language, content):
         translatedobj = translation.translations[0]
         print(f"Content was translated to: '{translatedobj.to}'.")
         print(f"Result: {translatedobj.text}\n")
-        text_to_speech.synthesizeText(target_language, translatedobj)
+        text_to_speech.synthesizeText(target_language, translatedobj.text)
 
     except HttpResponseError as exception:
         print(f"Error Code: {exception.error.code}")
