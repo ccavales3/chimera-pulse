@@ -12,6 +12,7 @@ from chimerapulse.core.language import document_summarization
 from chimerapulse.core.language import key_phrases
 from chimerapulse.core.language import named_entities
 from chimerapulse.core.language import sentiment_analysis
+from chimerapulse.core.language import entity_linking
 from chimerapulse.core.speech import diarization
 from chimerapulse.core.speech import language_identification
 from chimerapulse.core.translator import text_translator
@@ -22,11 +23,22 @@ from chimerapulse.core.translator import text_translator
 @click.command()
 @click.option('-p', '--file-path', callback=language_identification.get_audio_file_path, flag_value='flag', is_flag=False, default=None, help='Path to audio file')
 def translatespeech(file_path: str):
+    targetLanguage = input("Enter a target language\n"
+        "en = English\n"
+        "es = Spanish\n"
+        "fil = Filipino\n"
+        "fr = French\n"
+        "hi = Hindi\n"
+        "ko = Korean\n"
+        "ms = Malaysia\n").lower()
+    
+    print('\n')
+      
     # Identify language from list and transcribe audio
     [source_language, result] = language_identification.speech_identifylanguage(file_path)
 
     # Translate text
-    text_translator.translator_translatetext(source_language, 'fil', result.text)
+    text_translator.translator_translatetext(source_language, targetLanguage, result.text)
     
     # Analyze Sentiment
     print(sentiment_analysis.language_analyzesentiment(result.text))
@@ -36,6 +48,9 @@ def translatespeech(file_path: str):
     
     # Named Entity Recognition
     print(named_entities.language_namedentites(result.text))
+    
+    # Entity Linking
+    print(entity_linking.language_entitylinking(result.text))
     
     print('\n')
 

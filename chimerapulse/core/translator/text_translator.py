@@ -19,6 +19,9 @@ from azure.ai.translation.text import TextTranslationClient, TranslatorCredentia
 from azure.ai.translation.text.models import InputTextItem
 from azure.core.exceptions import HttpResponseError
 
+# Import helpers
+from chimerapulse.core.speech import text_to_speech
+
 # Load env vars
 load_dotenv()
 
@@ -29,6 +32,7 @@ def __authenticate_client():
     Returns:
         (TextTranslationClient): Authenticated client
     """
+        
     # Get Configuration Settings
     translatorendpoint = os.getenv('TRANSLATOR_SERVICE_ENDPOINT')
     translatorkey = os.getenv('TRANSLATOR_SERVICE_KEY')
@@ -72,7 +76,7 @@ def translator_translatetext(source_language, target_language, content):
         translatedobj = translation.translations[0]
         print(f"Content was translated to: '{translatedobj.to}'.")
         print(f"Result: {translatedobj.text}\n")
-        # _SynthesizeText(targetLanguage, translatedobj)
+        text_to_speech.synthesizeText(target_language, translatedobj.text)
 
     except HttpResponseError as exception:
         print(f"Error Code: {exception.error.code}")
