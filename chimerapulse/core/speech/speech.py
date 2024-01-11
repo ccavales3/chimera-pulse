@@ -8,6 +8,7 @@ import click
 
 from chimerapulse.core.speech import diarization
 from chimerapulse.core.speech import language_identification
+from chimerapulse.core.speech import video_transcription
 
 
 @click.group()
@@ -19,3 +20,4 @@ def speech():
 
 speech.add_command(diarization.diarization)
 speech.add_command(language_identification.identifylanguage)
+speech.add_command(video_transcription.videotranscription)

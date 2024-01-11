@@ -15,6 +15,7 @@ from chimerapulse.core.language import sentiment_analysis
 from chimerapulse.core.language import entity_linking
 from chimerapulse.core.speech import diarization
 from chimerapulse.core.speech import language_identification
+from chimerapulse.core.speech import video_transcription
 from chimerapulse.core.translator import text_translator
 
 # TODO: create fxn to run post call processing per chunk of transcription received
@@ -57,8 +58,9 @@ def translatespeech(file_path: str):
     print('--fin--')
 
 
+# TODO: change callback validation. See translatespeech fxn
 @click.command()
-@click.option('-p', '--file-path', callback=diarization.get_conversation_file_path, flag_value='flag', is_flag=False, default=None, help='Path to audio file')
+@click.option('-p', '--file-path', callback=language_identification.get_audio_file_path, flag_value='flag', is_flag=False, default=None, help='Path to audio file')
 def convosummarization(file_path):
     """Diarize audio with mono channel and summarize conversation
 
@@ -68,13 +70,12 @@ def convosummarization(file_path):
     diarization_result = diarization.speech_diarization(file_path)
     conversation_summarization.language_summarizeconversation('all', diarization_result)
 
-    # print(diarization_result)
-
     print('--fin--')
 
 
+# TODO: change callback validation. See translatespeech fxn
 @click.command()
-@click.option('-p', '--file-path', flag_value='flag', is_flag=False, default=None, help='Path to audio file')
+@click.option('-p', '--file-path', callback=language_identification.get_audio_file_path, flag_value='flag', is_flag=False, default=None, help='Path to audio file')
 def docsummarization(file_path):
     """TEMP entry point: Document summarization
 
@@ -86,5 +87,18 @@ def docsummarization(file_path):
 
     print('--fin--')
 
-# if __name__ == '__main__':
-#     main()
+
+@click.command()
+@click.option('-p', '--file-path', callback=video_transcription.get_video_file_path, flag_value='flag', is_flag=False, default=None, help='Path to video file')
+@click.option('-d', '--detect-language', flag_value=True, is_flag=True, default=False, help='Detect language')
+def summarizevideoconvo(file_path, detect_language):
+    """Video convo summarization
+
+    Args:
+        file_path (str): Path to conversation audio file
+    """
+    [audio_filepath, source_language] = video_transcription.speech_videotranscription(file_path, detect_language)
+    diarization_result = diarization.speech_diarization(audio_filepath, source_language)
+    conversation_summarization.language_summarizeconversation('all', diarization_result)
+
+    print('--fin--')

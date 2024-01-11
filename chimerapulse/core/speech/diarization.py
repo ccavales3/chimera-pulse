@@ -146,7 +146,8 @@ def conversation_transcriber_session_started_cb(evt: speechsdk.SessionEventArgs)
 @click.command()
 @click.option('-p', '--file-path', required=True, callback=get_conversation_file_path, flag_value='flag', is_flag=False, help='Path to audio file')
 @click.option('-v', '--verbose-print', is_flag=True, flag_value=True, default=False, help='Prints response instead of returning as JSON object')
-def diarization(file_path, verbose_print):
+@click.option('-l', '--source-language',  default='en-US', help='Source language of audio')
+def diarization(file_path, verbose_print, source_language):
     """Speech diarization on audio files with mono channel
 
     Args:
@@ -155,16 +156,16 @@ def diarization(file_path, verbose_print):
     global verbose
 
     verbose = verbose_print
-    speech_diarization(file_path)
+    speech_diarization(file_path, source_language)
 
 
 # TODO: Return conversation transcription in JSON to be used in conversation summarization
-def speech_diarization(filepath):
+def speech_diarization(filepath, source_language='en-US'):
     global verbose
 
     speech_config = __authenticate_client()
     # TODO: Possible use of languag identification
-    speech_config.speech_recognition_language='en-US'
+    speech_config.speech_recognition_language=source_language
 
     audio_config = speechsdk.audio.AudioConfig(filename=filepath)
     conversation_transcriber = speechsdk.transcription.ConversationTranscriber(speech_config=speech_config, audio_config=audio_config)

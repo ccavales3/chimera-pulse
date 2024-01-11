@@ -28,6 +28,7 @@ def commands():
 commands.add_command(chimerapulse.translatespeech)
 commands.add_command(chimerapulse.convosummarization)
 commands.add_command(chimerapulse.docsummarization)
+commands.add_command(chimerapulse.summarizevideoconvo)
 
 # ChimeraPulse core capabilities
 commands.add_command(language.language)

@@ -39,6 +39,7 @@ setup(
         'playsound==1.3.0',                         # https://github.com/TaylorSMarks/playsound
         'python-dotenv==1.0.0',
         'PyObjC==10.1',
+        'moviepy==1.0.3'                            # https://pypi.org/project/moviepy/
     ],
     zip_safe=False
 )
