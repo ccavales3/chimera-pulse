@@ -8,6 +8,29 @@
 
 A conversation analytics and cognitive tool
 
+## Usage
+
+### Install and run the package locally as a CLI tool
+
+Navigate to the root directory of the repository.
+
+```sh
+python install setup.py
+```
+
+### Run the package as a REST API
+
+Navigate to the root directory of the repository.
+
+```sh
+flask run --host=0.0.0.0 --debug
+```
+
+| Options        | Description                                               |
+| -------------- | --------------------------------------------------------- |
+| --host=0.0.0.0 | Make server publicly available                            |
+| --debug        | Run debug mode. Will automatically reload if code changes |
+
 ## Maintainers
 
 [@ccavales3](https://github.com/ccavales3)

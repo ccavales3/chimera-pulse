@@ -85,9 +85,11 @@ def summarizedocument(document, document_file_path):
     """
     document_contents = get_document_file_path(document, document_file_path)
     language_summarizedocument(document_contents)
+    # return language_summarizedocument(document_contents)
 
 
 def language_summarizedocument(document):
+    response = {}
     client = __authenticate_client()
 
     poller = client.begin_analyze_actions(
@@ -103,8 +105,24 @@ def language_summarizedocument(document):
     for document in document_results:
         for result in document:
             if result.kind == 'AbstractiveSummarization':
-                print('Abstractive Summary:\n')
-                [print(f'{summary.text}\n') for summary in result.summaries]
+                abstractive_summary = ''
+                # print(f'abstractive_summary: {abstractive_summary}')
+                for summary in result.summaries:
+                    # print(f'summary: {summary}')
+                    abstractive_summary += summary.text
+
+                response['abstractive_summary'] = abstractive_summary
+
+                # print('Abstractive Summary:\n')
+                # [print(f'{summary.text}\n') for summary in result.summaries]
             elif result.kind == 'ExtractiveSummarization':
-                print('Extractive Summary:\n')
-                [print(f'-{sentence.text}') for sentence in result.sentences]
+                extractive_summary = ''
+                for sentence in result.sentences:
+                    extractive_summary += sentence.text
+
+                response['extractive_summary'] = extractive_summary
+
+                # print('Extractive Summary:\n')
+                # [print(f'-{sentence.text}') for sentence in result.sentences]
+
+    return response
